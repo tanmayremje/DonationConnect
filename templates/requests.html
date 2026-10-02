@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="page-heading">
+
+        <h1>
+            Donation Requests
+        </h1>
+
+        <p>
+            Manage your donation requests.
+        </p>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Donation
+                    </th>
+
+                    <th>
+                        User
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for item in requests %}
+
+                <tr>
+
+                    <td>
+                        {{ item.donation_name }}
+                    </td>
+
+                    <td>
+
+                        {% if session.get('role') == 'donor' %}
+
+                            {{ item.acceptor_name }}
+
+                        {% else %}
+
+                            {{ item.donor_name }}
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <span class="status">
+                            {{ item.status }}
+                        </span>
+
+                    </td>
+
+                    <td>
+                        {{ item.created_at }}
+                    </td>
+
+                    <td>
+
+                        {% if session.get('role') == 'donor'
+                              and item.status == 'Pending' %}
+
+                            <a
+                                href="{{ url_for(
+                                    'accept_request',
+                                    request_id=item.id
+                                ) }}"
+                                class="small-btn">
+                                Accept
+                            </a>
+                            
+                            {% if request.status == 'Accept' %}
+
+                            <div class="contact-box">
+
+                                <h2>Donation Accepted ✅</h2>
+
+                                <p>
+                                    <strong>Donor:</strong>
+                                    {{ request.donor_name }}
+                                </p>
+
+                                <p>
+                                    <strong>Phone:</strong>
+                                    {{ request.donor_mobile }}
+                                </p>
+
+                                <p>
+                                    <strong>Email:</strong>
+                                    {{ request.donor_email }}
+                                </p>
+
+                                <a href="tel:{{ request.donor_mobile }}">
+                                    📞 Call Donor
+                                </a>
+
+                                <a href="mailto:{{ request.donor_email }}">
+                                    ✉️ Email Donor
+                                </a>
+
+                            </div>
+
+                            {% endif %}
+
+                            <a
+                                href="{{ url_for(
+                                    'reject_request',
+                                    request_id=item.id
+                                ) }}"
+                                class="small-btn danger-btn">
+                                Reject
+                            </a>
+
+                        {% elif item.status == 'Accepted' %}
+
+                            <a
+                                href="{{ url_for(
+                                    'complete_request',
+                                    request_id=item.id
+                                ) }}"
+                                class="small-btn">
+                                Complete
+                            </a>
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="5">
+
+                        No requests found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

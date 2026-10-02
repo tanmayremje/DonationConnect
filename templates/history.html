@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="page-heading">
+
+        <h1>
+            Donation History
+        </h1>
+
+        <p>
+            Track your completed donations.
+        </p>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Donation name
+                    </th>
+
+                    <th>
+                        {{ "Acceptor" if session.get('role')
+                           == "donor" else "Donor" }}
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for item in history %}
+
+                <tr>
+
+                    <td>
+                        {{ item.donation_name }}
+                    </td>
+
+                    <td>
+                        {{ item.other_user }}
+                    </td>
+
+                    <td>
+                        {{ item.created_at }}
+                    </td>
+
+                    <td>
+                        <span class="status completed">
+                            {{ item.status }}
+                        </span>
+
+                        {% if item.status == "Completed" and session.get('role') == "donor" %}
+
+                            <br><br>
+
+                            <a
+                                href="{{ url_for('certificate', donation_id=item.donation_id) }}"
+                                class="small-btn">
+
+                                📜 View Certificate
+
+                            </a>
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="4">
+                        No completed donations yet.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

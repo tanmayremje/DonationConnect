@@ -1,0 +1,425 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="dashboard">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <p>
+                Administration
+            </p>
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <span>👥</span>
+
+            <h2>
+                {{ total_users }}
+            </h2>
+
+            <p>
+                Total Users
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>🎁</span>
+
+            <h2>
+                {{ total_donors }}
+            </h2>
+
+            <p>
+                Total Donors
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>🤝</span>
+
+            <h2>
+                {{ total_acceptors }}
+            </h2>
+
+            <p>
+                Total Acceptors
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>📦</span>
+
+            <h2>
+                {{ total_donations }}
+            </h2>
+
+            <p>
+                Total Donations
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>📩</span>
+
+            <h2>
+                {{ pending_requests }}
+            </h2>
+
+            <p>
+                Pending Requests
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span>✅</span>
+
+            <h2>
+                {{ completed_donations }}
+            </h2>
+
+            <p>
+                Completed Donations
+            </p>
+
+        </div>
+
+
+    </div>
+
+    <!-- USER SECTION -->
+
+    <div class="admin-section">
+
+        <div class="section-title">
+            <h2>👥 All Users</h2>
+            <span>{{ users|length }} Users</span>
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Role</th>
+                        <th>Registered</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+
+                        <td>{{ user.id }}</td>
+
+                        <td>
+                            <strong>{{ user.name }}</strong>
+                        </td>
+
+                        <td>{{ user.email }}</td>
+
+                        <td>{{ user.mobile }}</td>
+
+                        <td>
+
+                            {% if user.role == 'donor' %}
+
+                                <span class="role donor">
+                                    🎁 Donor
+                                </span>
+
+                            {% elif user.role == 'acceptor' %}
+
+                                <span class="role acceptor">
+                                    🤝 Acceptor
+                                </span>
+
+                            {% else %}
+
+                                <span class="role admin">
+                                    🛡️ Admin
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ user.created_at }}
+                        </td>
+
+                        <td>
+
+                            {% if user.role != 'admin' %}
+
+                            <form method="POST"
+                                  action="{{ url_for('admin_delete_user', user_id=user.id) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this user?');">
+
+                                <button type="submit"
+                                        class="delete-btn">
+                                    🗑️ Delete
+                                </button>
+
+                            </form>
+
+                            {% else %}
+
+                            <span class="protected">
+                                Protected
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="7">
+                            No users found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- DONATION SECTION -->
+
+    <div class="admin-section">
+
+        <div class="section-title">
+
+            <h2>🎁 All Donations</h2>
+
+            <span>{{ donations|length }} Donations</span>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Donation</th>
+                        <th>Category</th>
+                        <th>Donor</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for donation in donations %}
+
+                    <tr>
+
+                        <td>
+                            {{ donation.id }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ donation.name }}
+                            </strong>
+
+                            {% if donation.description %}
+                            <br>
+                            <small>
+                                {{ donation.description }}
+                            </small>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ donation.category }}
+                        </td>
+
+                        <td>
+                            👤 {{ donation.donor_name }}
+                        </td>
+
+                        <td>
+                            📍 {{ donation.location }}
+                        </td>
+
+                        <td>
+
+                            {% if donation.status == 'Available' %}
+
+                            <span class="status available">
+                                Available
+                            </span>
+
+                            {% elif donation.status == 'Completed' %}
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                            {% else %}
+
+                            <span class="status">
+                                {{ donation.status }}
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ donation.created_at }}
+                        </td>
+
+                        <td>
+
+                            <form method="POST"
+                                  action="{{ url_for('admin_delete_donation', donation_id=donation.id) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this donation?');">
+
+                                <button type="submit"
+                                        class="delete-btn">
+                                    🗑️ Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="8">
+                            No donations found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- USER SECTION -->
+
+    <div class="admin-section">
+
+        <div class="section-title">
+            <h2>📝 All Complaints</h2>
+        </div>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                    </tr>
+
+                    {% if complaints %}
+
+                        {% for complaint in complaints %}
+
+                        <tr>
+
+                            <td>{{ complaint.id }}</td>
+
+                            <td>{{ complaint.user_name }}</td>
+
+                            <td>{{ complaint.user_email }}</td>
+
+                            <td>{{ complaint.user_mobile }}</td>
+
+                            <td>{{ complaint.subject }}</td>
+
+                            <td>{{ complaint.description }}</td>
+
+                            <td>{{ complaint.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    {% else %}
+                    <tr>
+                        <td colspan="8">No complaints found.</td>
+                    </tr>
+                    {% endif %}
+
+                </thead>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

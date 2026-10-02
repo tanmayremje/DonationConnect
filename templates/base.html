@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="http://fonts.googleapis.com/css2?family=Roboto:wght@600;700&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DonationConnect</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Left Peach Botanical Leaves -->
+<svg class="bg-botanical bg-botanical-left" viewBox="0 0 160 500" fill="none" preserveAspectRatio="none">
+    <path d="M-30,500 C-10,360 40,280 10,130 C-20,230 -35,380 -30,500 Z" fill="#FCE9DC" opacity="0.9"/>
+    <path d="M-15,500 C45,370 75,290 50,150 C5,250 -10,380 -15,500 Z" fill="#F7D3BD" opacity="0.6"/>
+    <path d="M-20,500 C75,390 110,300 85,180 C25,260 -5,390 -20,500 Z" fill="#F3BF9F" opacity="0.45"/>
+</svg>
+
+<!-- Right Green Botanical Leaves -->
+<svg class="bg-botanical bg-botanical-right" viewBox="0 0 160 500" fill="none" preserveAspectRatio="none">
+    <path d="M190,500 C170,360 120,280 150,130 C180,230 195,380 190,500 Z" fill="#E8F4EC" opacity="0.9"/>
+    <path d="M175,500 C115,370 85,290 110,150 C155,250 170,380 175,500 Z" fill="#D2EADB" opacity="0.6"/>
+    <path d="M180,500 C85,390 50,300 75,180 C135,260 165,390 180,500 Z" fill="#B9DFC7" opacity="0.45"/>
+</svg>
+
+
+<!-- Corner sticker/illustration -->
+  <img 
+    src="{{ url_for( 'static',
+    filename='illustration.webp') }}" 
+    alt="Volunteers sharing food" 
+    class="corner-sticker"/>
+
+<header>
+<div class="sub-nav-group">
+    <div class="slogan-badge">
+        <span class="word">Share</span>
+        <span class="word center-word">
+            Care
+            <svg class="heart-icon" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+        </span>
+        <span class="word">Connect</span>
+    </div>
+</div>
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('index') }}" class="logo">
+           <img src="{{ url_for( 'static', filename= 'logo.webp')}}"> Donation<span>Connect</span>
+        </a>
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}"
+                class="nav-button {% if request.endpoint == 'index' %} active{% endif %}" id="home">
+                Home
+            </a>
+
+
+            {% if session.get('user_id') %}
+    
+                {% if session .get ('role') == 'admin' %}
+
+                    <a href="{{ url_for('admin') }}"
+                        class="nav-button {% if request.endpoint == 'admin' %} active{% endif %}" id="admin">
+                        Admin
+                    </a>
+
+                    <a href="{{ url_for('notifications') }}"
+                        class="nav-button {% if request.endpoint == 'notifications' %} active{% endif %}" id="notification">
+                        Notifications
+                    </a>
+
+                {% else %}
+                    
+                    <a href="{{ url_for('dashboard') }}"
+                        class="nav-button {% if request.endpoint == 'dashboard' %} active{% endif %}" id="dashboard">
+                        Dashboard
+                    </a>
+
+                    <a href="{{ url_for('notifications') }}"
+                        class="nav-button {% if request.endpoint == 'notifications' %} active{% endif %}" id="notification">
+                        Notifications
+                    </a>
+
+                    <a href="{{ url_for('history') }}"
+                        class="nav-button {% if request.endpoint == 'history' %} active{% endif %}" id="history">
+                        History
+                    </a>
+
+                    <a href="{{ url_for('complaint') }}"
+                        class="nav-button {% if request.endpoint == 'complaint' %} active{% endif %}" id="complaint">
+                        Report
+                    </a>
+
+                {% endif %}
+
+                <a href="{{ url_for('logout') }}"
+                    class="nav-button {% if request.endpoint == 'logout' %} active{% endif %}" id="logout">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}"
+                    class="nav-button {% if request.endpoint == 'login' %} active{% endif %}" id="login">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                    class="nav-button {% if request.endpoint == 'register' %} active{% endif %}" id="register">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+
+    <div class="footer-content">
+
+        <h2>DonationConnect</h2>
+        <p>Connecting Donors with Acceptors</p>
+        <p>
+            Together we can share useful resources
+            and reduce unnecessary wastage.
+        </p>
+
+        <p class="copyright">
+            © 2026 DonationConnect
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- Notification Popup -->
+<div id="notificationPopup" class="notification-popup">
+
+    <div class="notification-icon">
+        🔔
+    </div>
+
+    <div class="notification-content">
+        <strong id="notificationTitle">
+            New Notification
+        </strong>
+
+        <p id="notificationMessage">
+            You have a new notification.
+        </p>
+    </div>
+
+    <button class="notification-close"
+            onclick="closeNotificationPopup()">
+        ×
+    </button>
+
+</div>
+
+<script src="{{ url_for('static',
+filename='script.js') }}"></script>
+
+
+
+</body>
+
+</html>

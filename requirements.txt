@@ -1,0 +1,6 @@
+Flask
+mysql-connector-python
+Werkzeug
+requests
+reportlab
+Flask-Mail

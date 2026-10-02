@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-card large">
+
+        <h1>
+            Report
+        </h1>
+
+        <p>
+            Report a fake user, fake donation,
+            misuse or another problem.
+        </p>
+
+        <form method="POST">
+
+            <label>
+                Subject
+            </label>
+
+            <select name="subject" required>
+
+                <option value="">
+                    Select issue
+                </option>
+
+                <option value="Fake User">
+                    Fake User
+                </option>
+
+                <option value="Fake Donation">
+                    Fake Donation
+                </option>
+
+                <option value="Misuse">
+                    Misuse of Platform
+                </option>
+
+                <option value="Inappropriate Behaviour">
+                    Inappropriate Behaviour
+                </option>
+
+                <option value="Incorrect Information">
+                    Incorrect Donation Information
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                rows="7"
+                placeholder="Describe the problem..."
+                required></textarea>
+
+
+            <button
+                type="submit"
+                class="btn primary full">
+
+                Submit Complaint
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

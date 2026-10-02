@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donation Certificate - DonationConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #eeeeee;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        /* ------------------------------
+           CERTIFICATE
+        ------------------------------ */
+
+        .certificate {
+            width: 210mm;
+            min-height: 297mm;
+
+            margin: 30px auto;
+
+            background: #fffdf5;
+
+            position: relative;
+
+            padding: 45px 55px;
+
+            border: 10px solid #075c3a;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.20);
+
+            overflow: hidden;
+        }
+
+        /* Gold inner border */
+
+        .certificate::before {
+            content: "";
+
+            position: absolute;
+
+            top: 13px;
+            left: 13px;
+            right: 13px;
+            bottom: 13px;
+
+            border: 3px solid #d6a52a;
+
+            pointer-events: none;
+        }
+
+        /* Second green border */
+
+        .certificate::after {
+            content: "";
+
+            position: absolute;
+
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+
+            border: 1px solid #075c3a;
+
+            pointer-events: none;
+        }
+
+        /* ------------------------------
+           CORNER DECORATION
+        ------------------------------ */
+
+        .corner {
+            position: absolute;
+
+            width: 85px;
+            height: 85px;
+
+            z-index: 2;
+        }
+
+        .corner span {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: 0 0 80px 0;
+
+            background: #075c3a;
+        }
+
+        .top-left {
+            top: 0;
+            left: 0;
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+
+            transform: rotate(90deg);
+        }
+
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+
+            transform: rotate(-90deg);
+        }
+
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+
+            transform: rotate(180deg);
+        }
+
+        /* ------------------------------
+           CONTENT
+        ------------------------------ */
+
+        .certificate-content {
+            position: relative;
+
+            z-index: 5;
+
+            text-align: center;
+        }
+
+        /* ------------------------------
+           LOGO
+        ------------------------------ */
+
+        .logo {
+            margin-top: 20px;
+        }
+
+        .logo-icon {
+            font-size: 30px;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .logo-icon img {
+            width: 80px;
+            height: 80px;
+        }
+        .brand {
+            font-size: 42px;
+
+            font-weight: bold;
+
+            letter-spacing: -2px;
+
+            color: #075c3a;
+        }
+
+        .brand span {
+            color: #e58b00;
+        }
+
+        .tagline {
+            margin-top: 4px;
+
+            font-size: 15px;
+
+            color: #244c42;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* ------------------------------
+           TOP RIGHT TEXT
+        ------------------------------ */
+
+        .top-tagline {
+            position: absolute;
+
+            right: 50px;
+            top: 40px;
+
+            color: #075c3a;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+        /* ------------------------------
+           TITLE
+        ------------------------------ */
+
+        .title {
+            margin-top: 48px;
+
+            font-size: 48px;
+
+            color: #063f35;
+
+            font-weight: bold;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+
+            font-size: 20px;
+
+            color: #174d43;
+
+            letter-spacing: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 15px;
+        }
+
+        .subtitle::before,
+        .subtitle::after {
+            content: "";
+
+            width: 115px;
+
+            height: 2px;
+
+            background: #d6a52a;
+        }
+
+        /* ------------------------------
+           PRESENTED TO
+        ------------------------------ */
+
+        .presented {
+            margin-top: 45px;
+
+            font-size: 21px;
+
+            color: #173e38;
+        }
+
+        /* ------------------------------
+           DONOR NAME
+        ------------------------------ */
+
+        .donor-name {
+            margin-top: 18px;
+
+            font-size: 46px;
+
+            font-style: italic;
+
+            font-weight: bold;
+
+            color: #063f35;
+
+            font-family: "Brush Script MT",
+                         "Segoe Script",
+                         cursive;
+        }
+
+        .gold-line {
+            width: 60%;
+
+            height: 2px;
+
+            background: #d6a52a;
+
+            margin: 18px auto;
+        }
+
+        .heart {
+            color: #e3a322;
+
+            font-size: 25px;
+        }
+
+        /* ------------------------------
+           DONATION
+        ------------------------------ */
+
+        .for-donation {
+            margin-top: 25px;
+
+            font-size: 20px;
+
+            color: #173e38;
+        }
+
+        .donation-name {
+            margin-top: 12px;
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #064c3b;
+        }
+
+        /* ------------------------------
+           MESSAGE
+        ------------------------------ */
+
+        .message {
+            max-width: 650px;
+
+            margin: 30px auto;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: #294c45;
+        }
+
+        /* ------------------------------
+           DETAILS
+        ------------------------------ */
+
+        .details {
+            margin: 45px auto 30px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 80px;
+        }
+
+        .detail {
+            min-width: 210px;
+
+            font-size: 16px;
+
+            color: #23483f;
+        }
+
+        .detail strong {
+            display: block;
+
+            margin-top: 8px;
+
+            font-size: 19px;
+
+            color: #063f35;
+        }
+
+        .divider {
+            width: 2px;
+
+            background: #d6a52a;
+        }
+
+        /* ------------------------------
+           FOOTER
+        ------------------------------ */
+
+        .footer {
+            margin-top: 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: end;
+
+            padding: 0 45px;
+        }
+
+        .signature {
+            text-align: center;
+
+            width: 220px;
+        }
+
+        .signature-name {
+            font-family: "Brush Script MT",
+                         "Segoe Script",
+                         cursive;
+
+            font-size: 30px;
+
+            font-style: italic;
+        }
+
+        .signature-line {
+            border-top: 2px solid #d6a52a;
+
+            margin-top: 5px;
+        }
+
+        .signature-title {
+            margin-top: 10px;
+
+            font-weight: bold;
+
+            color: #075c3a;
+
+            font-size: 17px;
+        }
+
+        .signature-subtitle {
+            margin-top: 5px;
+
+            color: #47635d;
+
+            font-size: 13px;
+        }
+
+        /* ------------------------------
+           SEAL
+        ------------------------------ */
+
+        .seal {
+
+            width: 125px;
+            height: 125px;
+
+            border-radius: 50%;
+
+            border: 8px double #d6a52a;
+
+            background: #fff4c7;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow:
+                0 0 0 5px #075c3a,
+                0 0 0 9px #d6a52a;
+
+            color: #075c3a;
+
+            font-weight: bold;
+        }
+
+        .seal-icon {
+            font-size: 32px;
+        }
+
+        .seal-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .seal-text {
+            font-size: 12px;
+
+            letter-spacing: 1px;
+
+            text-align: center;
+        }
+
+        /* ------------------------------
+           DECORATIVE BACKGROUND
+        ------------------------------ */
+
+        .decoration {
+            position: absolute;
+
+            color: #dcebd9;
+
+            font-size: 100px;
+
+            z-index: 1;
+
+            opacity: 0.55;
+        }
+
+        .decoration.left {
+            left: 10px;
+
+            bottom: 180px;
+
+            transform: rotate(-20deg);
+        }
+
+        .decoration.right {
+            right: 15px;
+
+            bottom: 120px;
+
+            transform: rotate(20deg);
+        }
+
+        /* ------------------------------
+           BUTTON
+        ------------------------------ */
+
+        .actions {
+            text-align: center;
+
+            margin: 20px;
+        }
+
+        .print-btn {
+            border: none;
+
+            padding: 13px 25px;
+
+            background: #075c3a;
+
+            color: white;
+
+            border-radius: 7px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background: #06482e;
+        }
+
+        /* ------------------------------
+           PRINT
+        ------------------------------ */
+
+        @media print {
+
+            body {
+                background: white;
+            }
+
+            .certificate {
+                margin: 0;
+
+                box-shadow: none;
+
+                width: 210mm;
+
+                min-height: 297mm;
+            }
+
+            .actions {
+                display: none;
+            }
+        }
+
+        @media(max-width: 700px) {
+
+            .certificate {
+                width: 100%;
+
+                padding: 35px 25px;
+            }
+
+            .brand {
+                font-size: 30px;
+            }
+
+            .title {
+                font-size: 34px;
+            }
+
+            .donor-name {
+                font-size: 35px;
+            }
+
+            .details {
+                gap: 20px;
+            }
+
+            .footer {
+                padding: 0;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="certificate">
+
+    <!-- Corner decorations -->
+
+    <div class="corner top-left">
+        <span></span>
+    </div>
+
+    <div class="corner top-right">
+        <span></span>
+    </div>
+
+    <div class="corner bottom-left">
+        <span></span>
+    </div>
+
+    <div class="corner bottom-right">
+        <span></span>
+    </div>
+
+
+    <!-- Background decoration -->
+
+    <div class="decoration left">
+        ♡
+    </div>
+
+    <div class="decoration right">
+        ♡
+    </div>
+
+
+    <div class="certificate-content">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <img src="{{ url_for( 'static', filename= 'logo.webp')}}"> 
+            </div>
+
+            <div class="brand">
+                Donation<span>Connect</span>
+            </div>
+
+            <div class="tagline">
+                Connecting Donors with People, NGOs and Communities
+            </div>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="title">
+            Certificate of Donation
+        </div>
+
+
+        <div class="subtitle">
+            CERTIFICATE OF APPRECIATION
+        </div>
+
+
+        <!-- PRESENTED TO -->
+
+        <div class="presented">
+            This certificate is proudly presented to
+        </div>
+
+
+        <!-- DONOR -->
+
+        <div class="donor-name">
+            {{ donor_name }}
+        </div>
+
+
+        <div class="gold-line">
+        </div>
+
+        <div class="heart">
+            ♥
+        </div>
+
+
+        <!-- DONATION -->
+
+        <div class="for-donation">
+            for successfully donating
+        </div>
+
+
+        <div class="donation-name">
+            {{ donation_name }}
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <div class="message">
+
+            Your kindness and generosity make a real
+            difference in someone's life.
+
+            <br>
+
+            Thank you for being a part of a better
+            and brighter tomorrow.
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="details">
+
+            <div class="detail">
+
+                Certificate No:
+
+                <strong>
+                    {{ certificate_number }}
+                </strong>
+
+            </div>
+
+
+            <div class="divider"></div>
+
+
+            <div class="detail">
+
+                Donation Date:
+
+                <strong>
+                    {{ donation_date }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+
+            <div class="signature">
+
+                <div class="signature-name">
+                    Admin
+                </div>
+
+                <div class="signature-line">
+                </div>
+
+                <div class="signature-title">
+                    Team DonationConnect
+                </div>
+
+                <div class="signature-subtitle">
+                    Together We Make a Difference
+                </div>
+
+            </div>
+
+
+            <!-- SEAL -->
+
+            <div class="seal">
+
+                <div class="seal-icon">
+                    <img src="{{ url_for( 'static', filename= 'logo.webp')}}">
+                </div>
+
+                <div class="seal-text">
+                    DONATION<br>
+                    CONNECT
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PRINT BUTTON -->
+
+<div class="actions">
+
+    <button
+        class="print-btn"
+        onclick="window.print()">
+
+        📜 Print / Save as PDF
+
+    </button>
+
+</div>
+
+
+</body>
+
+</html>

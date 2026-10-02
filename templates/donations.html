@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="page-heading">
+
+        <h1>
+            Available Donations
+        </h1>
+
+        <p>
+            Find useful items available for donation.
+        </p>
+
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="search-filter-box">
+
+        <form method="GET" action="{{ url_for('donations') }}">
+
+            <!-- Search donation -->
+            <input
+                type="text"
+                name="search"
+                placeholder="🔍 Search donation..."
+                value="{{ search or '' }}"
+            >
+
+            <!-- Category filter -->
+            <select name="category">
+
+                <option value="">All Categories</option>
+
+                <option value="Food"
+                    {% if category == "Food" %}selected{% endif %}>
+                    Food
+                </option>
+
+                <option value="Clothes"
+                    {% if category == "Clothes" %}selected{% endif %}>
+                    Clothes
+                </option>
+
+                <option value="Books"
+                    {% if category == "Books" %}selected{% endif %}>
+                    Books
+                </option>
+
+                <option value="Vegetables"
+                    {% if category == "Vegetables" %}selected{% endif %}>
+                    Vegetables
+                </option>
+
+                <option value="Medical"
+                    {% if category == "Medical" %}selected{% endif %}>
+                    Medical
+                </option>
+
+                <option value="Other"
+                    {% if category == "Other" %}selected{% endif %}>
+                    Other
+                </option>
+
+            </select>
+
+            <!-- ADDRESS FILTER -->
+            <input
+                type="text"
+                name="address"
+                placeholder="📍 Enter address or area..."
+                value="{{ address or '' }}"
+            >
+
+        <button type="submit" class="search-btn">
+            Search
+        </button>
+
+        <a href="{{ url_for('donations') }}" class="reset-btn">
+            Reset
+        </a>
+
+    </form>
+
+</div>
+
+
+    <div class="donation-grid">
+
+        {% for donation in donations %}
+
+        <div class="donation-card">
+
+            <div class="category">
+                {{ donation.category }}
+            </div>
+
+            <h2>
+                {{ donation.name }}
+            </h2>
+
+            <p>
+                {{ donation.description }}
+            </p>
+
+            <p>
+                📍 {{ donation.location }}
+            </p>
+
+            <p>
+                👤 {{ donation.donor_name }}
+            </p>
+
+            {% if session.get('role') == 'acceptor' %}
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'request_donation',
+                    donation_id=donation.id
+                ) }}">
+
+                <textarea
+                    name="message"
+                    placeholder="Write a short message..."
+                    rows="3"></textarea>
+
+                <button
+                    type="submit"
+                    class="btn primary full">
+
+                    Request Donation
+
+                </button>
+
+            </form>
+
+            {% endif %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+
+            <h2>
+                No donations available.
+            </h2>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

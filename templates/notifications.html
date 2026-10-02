@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-section">
+
+    <div class="page-heading">
+
+        <h1>
+            Notifications
+        </h1>
+
+    </div>
+
+
+    <div class="notification-list">
+
+        {% for notification in notifications %}
+
+        <div class="notification-card">
+
+            <div>
+                🔔
+            </div>
+
+            <div>
+
+                <p class="notification-message">
+                    {{ notification.message }}
+                </p>
+
+                <small>
+                    {{ notification.created_at }}
+                </small>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+
+            <h2>
+                No notifications.
+            </h2>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

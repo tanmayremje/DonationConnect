@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-card large">
+
+        <h1>
+            Add Donation
+        </h1>
+
+        <p>
+            Share something useful with someone who needs it.
+        </p>
+
+        <form method="POST">
+
+            <label>
+                Donation Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Example: School Books"
+                required>
+
+
+            <label>
+                Category
+            </label>
+
+            <select name="category" required>
+
+                <option value="">
+                    Select category
+                </option>
+
+                <option value="Food">
+                    Food
+                </option>
+
+                <option value="Clothes">
+                    Clothes
+                </option>
+
+                <option value="Books">
+                    Books
+                </option>
+
+                <option value="Vegetables">
+                    Vegetables
+                </option>
+
+                <option value="Household">
+                    Household Items
+                </option>
+
+                <option value="Medical">
+                    Medical
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                name="description"
+                rows="5"
+                placeholder="Describe the donation..."
+                required></textarea>
+
+
+            <label>
+                Location
+            </label>
+
+            <input
+                type="text"
+                name="location"
+                id="location"
+                placeholder="Example: Vasai West, Maharashtra"
+                required>
+
+
+            <button
+                type="button"
+                class="location-btn"
+                onclick="getLocation()">
+
+                📍 Use My Current Location
+
+            </button>
+
+            <p id="locationStatus"></p>
+
+            <button
+                type="submit"
+                class="btn primary full">
+
+                Publish Donation
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-image">
+
+        <img
+            src="{{ url_for( 'static',
+            filename='community.jpeg') }}"
+            alt="Community donation and support">
+        
+        <div class="text-overlay">
+
+            <h2>
+                Together, We Can Create
+                <br>
+                Better Tomorrow
+            </h2>
+
+            <p>
+                100% transparent & trusted
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="hero-content">
+
+        <p class="hero-tag">
+            SHARE • CARE • CONNECT
+        </p>
+
+        <h1>
+            Give What You Can.
+            <br>
+            <span>Help Someone Nearby.</span>
+        </h1>
+
+        <p>
+            DonationConnect connects donors with people,
+            NGOs and communities that need useful resources.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('donations') }}"
+               class="btn primary">
+                Find Donations
+            </a>
+
+            <a href="{{ url_for('register') }}"
+               class="btn secondary">
+                Start Donating
+            </a>
+
+        </div>
+
+        <div class="hero-features">
+
+            <div class="hero-feature">
+                <p>
+                    <span>✔</span>  Verified NGOs
+                </p>
+            </div>
+
+            <div class="hero-feature">
+                <p>
+                    <span>🛡️</span>  Secure & Safe
+                </p>
+            </div>
+
+            <div class="hero-feature">
+                <p>
+                    <span>📈</span>  Local Impact
+                </p>
+            </div>
+
+        </div>
+        
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <h2>
+        How DonationConnect Works
+    </h2>
+
+    <p class="section-text">
+        A simple platform for sharing useful resources
+        with people who need them.
+    </p>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                👤
+            </div>
+
+            <h3>
+                Register
+            </h3>
+
+            <p>
+                Create an account as a donor or acceptor.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🎁
+            </div>
+
+            <h3>
+                Donate
+            </h3>
+
+            <p>
+                Add food, clothes, books, vegetables
+                and other reusable items.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📍
+            </div>
+
+            <h3>
+                Find Nearby
+            </h3>
+
+            <p>
+                Find relevant donation opportunities
+                according to location.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🤝
+            </div>
+
+            <h3>
+                Connect
+            </h3>
+
+            <p>
+                Send requests and complete the
+                donation process.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="donation-section">
+
+    <div class="section-heading">
+
+        <h2>
+            Recent Donations
+        </h2>
+
+        <a href="{{ url_for('donations') }}">
+            View All
+        </a>
+
+    </div>
+
+
+    <div class="donation-grid">
+
+        {% for donation in donations %}
+
+        <div class="donation-card">
+
+            <div class="category">
+                {{ donation.category }}
+            </div>
+
+            <h3>
+                {{ donation.name }}
+            </h3>
+
+            <p>
+                {{ donation.description }}
+            </p>
+
+            <p>
+                📍 {{ donation.location }}
+            </p>
+
+            <small>
+                Donated by {{ donation.donor_name }}
+            </small>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+
+            <h3>
+                No donations available yet.
+            </h3>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="dashboard">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <p>
+                Welcome,
+            </p>
+
+            <h1>
+                {{ session.get('name') }}
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            {% if session.get('role') == 'donor' %}
+
+                <div class="stat-ic bg-g">🎁</div>
+                <div class="stat-info">
+                <h2>{{ donation_count }}</h2>
+                <p>My Donations</p>
+                </div>    
+                
+            {% else %}
+
+                <div class="stat-ic bg-g">🎁</div>
+                <div class="stat-info">
+                <h2>{{ received_count }}</h2>
+                <p>Received Donation</p>
+                </div>
+            
+            {% endif %}
+                
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-ic bg-b">📄</div>
+            <div class="stat-info">
+            <h2>{{ request_count }}</h2>
+            <p>Requests</p>
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-ic bg-o">🔔</div>
+            <div class="stat-info">
+            <h2>{{ notification_count }}</h2>
+            <p>Notifications</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="quick-actions">
+
+        <h2>
+            Quick Actions
+        </h2>
+
+        <div class="action-grid">
+
+            {% if session.get('role') == 'donor' %}
+
+            <a href="{{ url_for('add_donation') }}" class="action-card">
+                <div class="q-ic bg-g">🎁</div>
+                <div class="q-info">
+                <strong>Add Donation</strong>
+                <small>Share useful items</small>
+                <div class="action-arrow">&rarr;</div>
+                </div>
+            </a>
+
+            {% endif %}
+
+
+            <a href="{{ url_for('donations') }}" class="action-card">
+                <div class="q-ic bg-b">🔍</div>
+                <div class="q-info">
+                <strong>Find Donations</strong>
+                <small>View available donations</small>
+                <div class="action-arrow">&rarr;</div>
+                </div>
+            </a>
+
+
+            <a href="{{ url_for('requests_page') }}" class="action-card">
+                <div class="q-ic bg-o">📄</div>
+                <div class="q-info">
+                <strong>Requests</strong>
+                <small>Manage donation requests</small>
+                <div class="action-arrow">&rarr;</div>
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
