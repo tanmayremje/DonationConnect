@@ -26,9 +26,9 @@ app.secret_key = "donationconnect_secret_key"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'tanmayremje7@gmail.com'
+app.config['MAIL_USERNAME'] = 'donationconnect.admin@gmail.com'
 app.config['MAIL_PASSWORD'] = ''
-app.config['MAIL_DEFAULT_SENDER'] = 'tanmayremje7@gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = 'donationconnect.admin@gmail.com'
 
 mail = Mail(app)
 
@@ -71,7 +71,7 @@ def get_db():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="admin@123",
+        password="",
         database="donationconnect"
     )
 
