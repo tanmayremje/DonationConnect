@@ -74,4 +74,4 @@ CREATE TABLE complaints (
 use donationconnect;
 update users
 set role = 'admin'
-where email = 'tanmayremje7@gmail.com'
+where email = 'donationconnect.admin@gmail.com'
